@@ -1,0 +1,82 @@
+syntax = "proto3";
+package fengchu.framework;
+
+option go_package = "fengchu/model/config;config";
+
+import "google/protobuf/duration.proto";
+
+message SystemConfig {
+  System system =1;
+  App app = 2;
+  Server server = 3;
+  Database database= 4;
+  Redis redis = 5;
+  Zap zap = 6;
+  Trace trace = 7;
+}
+
+message System {
+  string env = 1;
+}
+
+message App {
+  int32 app_id = 1;
+  string app_name = 2;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+}
+
+message Database {
+  string driver = 1;
+  string address = 2;
+  string database = 3;
+  string username = 4;
+  string password = 5;
+  string options = 6;
+  int32 max_idle_connections = 7;
+  int32 max_open_connections = 8;
+  google.protobuf.Duration conn_max_idle_time = 9;
+  google.protobuf.Duration conn_max_life_time = 10;
+  string log_level = 11;
+}
+
+message Redis {
+  string address = 1;
+  int32 database = 2;
+  string username = 3;
+  string password = 4;
+  google.protobuf.Duration read_timeout = 5;
+  google.protobuf.Duration write_timeout = 6;
+}
+
+message Zap {
+  string level = 1;
+  string format = 2;
+  string prefix = 3;
+  string director = 4;
+  string encode_level = 5;
+  string stacktrace_key = 6;
+  string max_age = 7;
+  bool show_line = 8;
+  bool log_in_console = 9;
+}
+
+message Trace {
+  string endpoint = 1;
+  string service_name = 2;
+  string env = 3;
+  int32 timeout = 4;
+}
