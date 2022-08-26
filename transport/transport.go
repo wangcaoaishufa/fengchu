@@ -15,16 +15,12 @@ import (
 var hostname, _ = os.Hostname()
 
 var ProviderSet = wire.NewSet(
-	//server.NewGRPCServer,
-	//server.NewHTTPServer,
 	New,
 )
 
 type Transport struct {
-	logger     *log.Helper
-	server     *kratos.App
-	httpServer *http.Server
-	grpcServer *grpc.Server
+	logger *log.Helper
+	server *kratos.App
 }
 
 func New(
@@ -52,10 +48,8 @@ func New(
 	server := kratos.New(options...)
 
 	return &Transport{
-		logger:     log.NewHelper(logger),
-		server:     server,
-		httpServer: httpServer,
-		grpcServer: grpcServer,
+		logger: log.NewHelper(logger),
+		server: server,
 	}
 }
 
@@ -74,12 +68,4 @@ func (t *Transport) Stop() error {
 
 	t.logger.Info("transport server stopping ...")
 	return nil
-}
-
-func (t *Transport) HttpServer() *http.Server {
-	return t.httpServer
-}
-
-func (t *Transport) GrpcServer() *grpc.Server {
-	return t.grpcServer
 }

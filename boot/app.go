@@ -5,8 +5,6 @@ import (
 	"github.com/chuangxinyuan/fengchu/component/trace"
 	"github.com/chuangxinyuan/fengchu/transport"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/transport/grpc"
-	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/google/wire"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
@@ -55,12 +53,4 @@ func (a *App) Stop() {
 	if err := a.transport.Stop(); err != nil {
 		a.logger.Error(err)
 	}
-}
-
-func (a *App) HttpServer() *http.Server {
-	return a.transport.HttpServer()
-}
-
-func (a *App) GrpcServer() *grpc.Server {
-	return a.transport.GrpcServer()
 }
